@@ -1,0 +1,14 @@
+Django==1.10
+psycopg2
+
+unicode-slugify==0.1.3
+django-autoslug==1.9.3
+
+django-model-utils
+
+docker==2.0.2
+
+Pillow==4.0.0
+
+# web server
+gunicorn==19.6.0

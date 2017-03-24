@@ -1,0 +1,18 @@
+{% extends 'service/base.html' %}
+{% block content %}
+<div class="jumbotron animated fadeInUp card-2">
+    {{ form.errors }}
+  <form action="" method="POST">
+    <div class="form-group">
+    {% csrf_token %} 
+        <label for="adress">Address</label>
+        {{ form.address }}
+        <label for="service">Service</label>
+        {{ form.service }}
+    </div>
+    <button type="submit" class="btn btn-primary">Create service</button>
+  </form>
+
+</div>
+{% endblock content %}
+

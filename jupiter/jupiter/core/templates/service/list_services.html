@@ -1,0 +1,35 @@
+{% extends 'service/base.html' %}
+  
+{% block content %}
+<div class="container">
+  {% if not services %}
+    <div class="alert alert-info animated flipInX card-1" role="alert">
+      <strong>Oh snap!</strong> Looks like you have any service yet...
+    </div>
+  {% endif %}
+  <div class="card-columns">
+    <form action="" method="POST">
+    {% csrf_token %} 
+    {% for service in services  %}
+      <div class="card text-xs-center animated fadeInUp card-1" style="animation-delay:.{{forloop.counter}}s">
+        <div class="card-header">
+          <h5>{{ service.service.name }}</h5>
+        </div>
+        <div class="card-block">
+          <a href="http://{{ service.url }}" target="_blank" class="">{{ service.url }}</a> <br><hr>
+          {% if service.status == "running" %}
+            <button type="submit" class="btn btn-warning" name="turn_off" value="{{ service.id }}">OFF</button>
+          {% else %}
+            <button type="submit" class="btn btn-success" name="turn_on" value="{{ service.id }}">ON</button>
+          {% endif %}
+          <button type="submit" class="btn btn-danger" name="delete" value="{{ service.id }}" onclick="return confirm('Are you sure you would like to delete {{ service.url }}?');">DELETE</button>
+        </div>
+        <div class="card-footer text-muted">
+          {{ service.status }}
+        </div>
+      </div>
+    {% endfor %}
+    </form>
+  </div>
+</div>
+{% endblock content %}

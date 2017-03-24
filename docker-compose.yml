@@ -1,0 +1,33 @@
+version: '2'
+
+volumes:
+  postgres_data: {}
+  postgres_backup: {}
+  media_data: {}
+
+services:
+  postgres:
+    build: postgres/
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
+    env_file: .env
+
+  django:
+    build: ./jupiter/
+    volumes:
+      - media_data:/app/media
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    env_file: .env
+    user: django
+    entrypoint: ['bin/entrypoint.sh']
+    command: ['gunicorn', '-c', 'jupiter/config/gunicorn.py', 'wsgi:application']
+
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   container_name: nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+    

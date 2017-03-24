@@ -1,0 +1,22 @@
+version: '2'
+# Local / Dev specific settings
+services:
+
+  django:
+    build:
+      context: ./jupiter/
+      dockerfile: Dockerfile-dev
+    environment:
+      - POSTGRES_PASSWORD=user
+      - USE_DOCKER=yes
+      # - VIRTUAL_HOST=admin.127.0.0.1.xip.io
+      - DOCKER_HOST=unix:///tmp/docker.sock
+    volumes:
+      - ./jupiter:/app
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "8000:8000"
+    user: root
+    tty: true
+    stdin_open: true
+    command: ['python', 'jupiter/manage.py', 'runserver', '0.0.0.0:8000']

@@ -1,0 +1,14 @@
+version: '2'
+# Production specific settings
+services:
+  nginx:
+    image: nginx:1.10.1
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+    volumes_from:
+      - django:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+      - postgres

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec ${PROJECT_ROOT_DIR}/bin/manage run_huey
